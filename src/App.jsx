@@ -8,6 +8,7 @@ import Cart from './pages/Cart'
 import Checkout from './pages/Checkout'
 import ChatWidget from './components/ChatWidget'
 import { PROJECT_TITLE } from './config/constants';
+import ScrollToTop from './components/ScrollToTop'
 
 export default function App() {
   useEffect(() => {
@@ -17,6 +18,7 @@ export default function App() {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-1">
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/product/:id" element={<ProductDetail />} />
