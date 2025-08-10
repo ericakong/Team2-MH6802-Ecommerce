@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { fetchProductById } from '../lib/api'
 import { getRecommendations } from '../lib/recommendations'
 import ChatWidget from '../components/ChatWidget'
@@ -86,9 +86,9 @@ export default function ProductDetail() {
                     <h3 className="font-semibold mb-2">You may also like</h3>
                     <div className="space-y-2">
                         {recs.map((r) => (
-                            <a
+                            <Link
                                 key={r.id}
-                                href={`/product/${r.id}`}
+                                to={`/product/${r.id}`}
                                 className="flex items-center gap-3 rounded-md border p-2 hover:bg-gray-50"
                             >
                                 <img src={r.image} alt={r.name} className="w-14 h-14 object-cover rounded" />
@@ -96,7 +96,7 @@ export default function ProductDetail() {
                                     <div className="font-medium truncate">{r.name}</div>
                                     <div className="text-sm text-gray-600">${r.price.toFixed(2)}</div>
                                 </div>
-                            </a>
+                            </Link>
                         ))}
                     </div>
                 </section>

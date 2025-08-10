@@ -1,30 +1,56 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
+
+function readCart() {
+    try { return JSON.parse(localStorage.getItem('cart') || '[]') } catch { return [] }
+}
 
 export default function Checkout() {
     const [form, setForm] = useState({ name: '', email: '', phone: '', address: '', payment: '' })
     const [success, setSuccess] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [cart, setCart] = useState(() => readCart())
 
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]')
-    const total = cart.reduce((s, i) => s + i.price * i.qty, 0)
+    // keep cart in sync if other tabs/pages update it
+    useEffect(() => {
+        const handler = () => setCart(readCart())
+        window.addEventListener('storage', handler)
+        window.addEventListener('cart-updated', handler)
+        return () => {
+            window.removeEventListener('storage', handler)
+            window.removeEventListener('cart-updated', handler)
+        }
+    }, [])
 
-    function onSubmit(e) {
+    const total = useMemo(() => cart.reduce((s, i) => s + i.price * i.qty, 0), [cart])
+
+    async function onSubmit(e) {
         e.preventDefault()
         if (!form.name || !form.email || !form.address || !form.payment) {
-            return alert('Please fill all required fields.')
+            alert('Please fill all required fields.')
+            return
         }
-        setTimeout(() => {
-            localStorage.removeItem('cart')
+        setLoading(true)
+        try {
+            // simulate payment
+            await new Promise((r) => setTimeout(r, 600))
+            localStorage.setItem('cart', '[]')            // clear cart
             window.dispatchEvent(new Event('cart-updated'))
-            setSuccess(true)
-        }, 600)
+            setSuccess(true)                               // show success panel (no navigation)
+        } finally {
+            setLoading(false)
+        }
     }
 
     if (success) {
         return (
             <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 py-10 text-center">
-                <div className="text-3xl font-semibold">🎉 Order placed!</div>
-                <p className="mt-2 text-gray-600">You’ll receive a confirmation email shortly.</p>
-                <a href="/" className="btn mt-6 inline-block">Back to Home</a>
+                <div className="card p-8">
+                    <h1 className="text-3xl font-semibold">🎉 Order placed!</h1>
+                    <p className="mt-2 text-gray-600">You’ll receive a confirmation email shortly.</p>
+                    {/* Use Link instead of <a href="/"> */}
+                    <Link to="/" className="btn mt-6 inline-block">Back to Home</Link>
+                </div>
             </div>
         )
     }
@@ -32,6 +58,7 @@ export default function Checkout() {
     return (
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-8">
             <h1 className="text-2xl font-bold mb-6">Checkout</h1>
+
             <div className="grid lg:grid-cols-[2fr,1fr] gap-6">
                 <form className="card p-4 space-y-3" onSubmit={onSubmit} noValidate>
                     <div>
@@ -52,14 +79,22 @@ export default function Checkout() {
                     </div>
                     <div>
                         <label className="block text-sm mb-1" htmlFor="payment">Payment method *</label>
-                        <select id="payment" className="input" value={form.payment} onChange={(e) => setForm({ ...form, payment: e.target.value })} required>
+                        <select
+                            id="payment"
+                            className="input"
+                            value={form.payment}
+                            onChange={(e) => setForm({ ...form, payment: e.target.value })}
+                            required
+                        >
                             <option value="">Select…</option>
-                            <option>Visa</option>
-                            <option>Mastercard</option>
-                            <option>PayNow</option>
+                            <option value="visa">Visa</option>
+                            <option value="mastercard">Mastercard</option>
+                            <option value="paynow">PayNow</option>
                         </select>
                     </div>
-                    <button className="btn w-full mt-2" type="submit">Pay ${total.toFixed(2)}</button>
+                    <button className="btn w-full mt-2" type="submit" disabled={loading}>
+                        {loading ? 'Processing…' : `Pay $${total.toFixed(2)}`}
+                    </button>
                 </form>
 
                 <aside className="card p-4 h-fit">
