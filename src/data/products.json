@@ -1,0 +1,108 @@
+[
+  {
+    "id": "p-1",
+    "name": "Aurora Wireless Headphones",
+    "price": 129.99,
+    "category": "Audio",
+    "rating": 4.6,
+    "image": "https://picsum.photos/seed/aurora/600/600",
+    "images": [
+      "https://picsum.photos/seed/aurora1/800/800",
+      "https://picsum.photos/seed/aurora2/800/800",
+      "https://picsum.photos/seed/aurora3/800/800"
+    ],
+    "description": "Crisp, balanced sound with active noise reduction and 30-hour battery life."
+  },
+  {
+    "id": "p-2",
+    "name": "Nebula Smartwatch",
+    "price": 199.0,
+    "category": "Wearables",
+    "rating": 4.3,
+    "image": "https://picsum.photos/seed/nebula/600/600",
+    "images": [
+      "https://picsum.photos/seed/nebula1/800/800",
+      "https://picsum.photos/seed/nebula2/800/800"
+    ],
+    "description": "Track health metrics, NFC payments, and offline music."
+  },
+  {
+    "id": "p-3",
+    "name": "Lumen Desk Lamp",
+    "price": 49.5,
+    "category": "Home",
+    "rating": 4.2,
+    "image": "https://picsum.photos/seed/lumen/600/600",
+    "images": [
+      "https://picsum.photos/seed/lumen1/800/800",
+      "https://picsum.photos/seed/lumen2/800/800"
+    ],
+    "description": "Dimmable LED lamp with USB-C fast charging and color temperature control."
+  },
+  {
+    "id": "p-4",
+    "name": "Atlas Backpack",
+    "price": 89.0,
+    "category": "Accessories",
+    "rating": 4.7,
+    "image": "https://picsum.photos/seed/atlas/600/600",
+    "images": [
+      "https://picsum.photos/seed/atlas1/800/800",
+      "https://picsum.photos/seed/atlas2/800/800",
+      "https://picsum.photos/seed/atlas3/800/800"
+    ],
+    "description": "Water-resistant, 20L capacity with padded laptop sleeve."
+  },
+  {
+    "id": "p-5",
+    "name": "Comet Portable Speaker",
+    "price": 59.99,
+    "category": "Audio",
+    "rating": 4.4,
+    "image": "https://picsum.photos/seed/comet/600/600",
+    "images": [
+      "https://picsum.photos/seed/comet1/800/800",
+      "https://picsum.photos/seed/comet2/800/800"
+    ],
+    "description": "Rich bass in a compact form. IP67 dust & water resistance."
+  },
+  {
+    "id": "p-6",
+    "name": "Orbit Mechanical Keyboard",
+    "price": 139.0,
+    "category": "Accessories",
+    "rating": 4.8,
+    "image": "https://picsum.photos/seed/orbit/600/600",
+    "images": [
+      "https://picsum.photos/seed/orbit1/800/800",
+      "https://picsum.photos/seed/orbit2/800/800"
+    ],
+    "description": "Hot-swappable switches, per-key RGB, and aluminum build."
+  },
+  {
+    "id": "p-7",
+    "name": "Flux Action Camera",
+    "price": 249.0,
+    "category": "Cameras",
+    "rating": 4.5,
+    "image": "https://picsum.photos/seed/flux/600/600",
+    "images": [
+      "https://picsum.photos/seed/flux1/800/800",
+      "https://picsum.photos/seed/flux2/800/800"
+    ],
+    "description": "4K60, horizon leveling, and waterproof without a case."
+  },
+  {
+    "id": "p-8",
+    "name": "Quasar Drone Mini",
+    "price": 299.0,
+    "category": "Drones",
+    "rating": 4.1,
+    "image": "https://picsum.photos/seed/quasar/600/600",
+    "images": [
+      "https://picsum.photos/seed/quasar1/800/800",
+      "https://picsum.photos/seed/quasar2/800/800"
+    ],
+    "description": "Sub-250g drone with 2-axis gimbal and GPS return-to-home."
+  }
+]

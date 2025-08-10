@@ -1,0 +1,40 @@
+{
+    "1": [
+        {
+            "id": "r1",
+            "author": "Alice",
+            "rating": 5,
+            "comment": "Great quality and fast shipping!",
+            "photos": [],
+            "created_at": "2025-08-08T10:00:00Z"
+        },
+        {
+            "id": "r2",
+            "author": "Bob",
+            "rating": 4,
+            "comment": "Good value for money.",
+            "photos": [],
+            "created_at": "2025-08-07T10:00:00Z"
+        },
+        {
+            "id": "r3",
+            "author": "Cheng",
+            "rating": 3,
+            "comment": "Average, does the job.",
+            "photos": [
+                "https://picsum.photos/seed/rv1/200"
+            ],
+            "created_at": "2025-08-06T10:00:00Z"
+        }
+    ],
+    "2": [
+        {
+            "id": "r4",
+            "author": "Dana",
+            "rating": 5,
+            "comment": "Exactly as described. Love it!",
+            "photos": [],
+            "created_at": "2025-08-05T10:00:00Z"
+        }
+    ]
+}
