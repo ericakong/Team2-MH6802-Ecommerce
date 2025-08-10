@@ -63,9 +63,9 @@ function generateMockReviews(productId) {
 // --------------------------------------------------
 
 export async function fetchReviews({ productId, rating = '', withPhotos = false, limit = 5, cursor = '' }) {
-    await sleep(200) // simulate latency
+    await sleep(200)
 
-    // get from JSON, or generate if missing
+    // get from JSON, or generate if missing (same as your current file)
     let rows = Array.isArray(all?.[productId]) ? all[productId].slice() : generateMockReviews(productId)
 
     // stable order (newest first)
@@ -75,16 +75,18 @@ export async function fetchReviews({ productId, rating = '', withPhotos = false,
     if (rating) rows = rows.filter(r => r.rating === Number(rating))
     if (withPhotos) rows = rows.filter(r => Array.isArray(r.photos) && r.photos.length > 0)
 
-    // cursor
+    // cursor (keyset: created_at < cursor)
     if (cursor) rows = rows.filter(r => new Date(r.created_at) < new Date(cursor))
 
     const L = Math.max(1, Math.min(20, Number(limit) || 5))
+    const hasMore = rows.length > L
     const page = rows.slice(0, L)
-    const nextCursor = page.length ? page[page.length - 1].created_at : null
 
-    // summary uses the full (unfiltered) set for this product
-    const base = Array.isArray(all?.[productId]) ? all[productId]
-        : generateMockReviews(productId) // generate again for summary shape (cheap)
+    // Only expose nextCursor if there is another page
+    const nextCursor = hasMore ? page[page.length - 1].created_at : null
+
+    // Summary uses the full, unfiltered set for this product (like real stores)
+    const base = Array.isArray(all?.[productId]) ? all[productId] : generateMockReviews(productId)
     const count = base.length
     const avg = count ? base.reduce((s, r) => s + r.rating, 0) / count : 0
     const buckets = [1, 2, 3, 4, 5].map(star => base.filter(r => r.rating === star).length)

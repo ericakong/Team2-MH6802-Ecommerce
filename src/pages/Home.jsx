@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
-import { fetchCategories, fetchProducts } from '../lib/api'
+import { fetchCategories, fetchProducts } from '../lib/api' // <-- original mock api
 import ProductGrid from '../components/ProductGrid'
 import Filters from '../components/Filters'
 import SearchBar from '../components/SearchBar'
-import data from '../data/products.json'
+import data from '../data/products.json' // optional: for SearchBar suggestions
 
 export default function Home() {
     const [categories, setCategories] = useState(['All'])
@@ -12,46 +12,70 @@ export default function Home() {
     const [page, setPage] = useState(1)
     const [items, setItems] = useState([])
     const [total, setTotal] = useState(0)
+    const [loading, setLoading] = useState(false)
     const pageSize = 6
 
-    // used to ignore late responses (race-safe + StrictMode-safe)
+    // Guards for StrictMode double-invoke + racing requests
     const reqRef = useRef(0)
+    const didInit = useRef(false)
+
+    // Infinite scroll sentinel
+    const sentinelRef = useRef(null)
 
     useEffect(() => {
-        fetchCategories().then(setCategories)
+        fetchCategories().then(setCategories).catch(console.error)
     }, [])
 
-    // reset when filters/search change
+    // Reset list when search/category changes
     useEffect(() => {
         setItems([])
         setPage(1)
     }, [q, category])
 
-    // fetch products when query/category/page change
+    // Fetch products
     useEffect(() => {
+        // Tiny tweak so first StrictMode double-run doesn't feel like two loads
+        if (!didInit.current) {
+            didInit.current = true
+        }
+
         let mounted = true
         const myReqId = ++reqRef.current
+        setLoading(true)
 
-        fetchProducts({ q, category, page, pageSize }).then(({ items: newItems, total }) => {
-            // ignore if:
-            // 1) component unmounted
-            // 2) a newer request has been started (React StrictMode or fast typing)
-            if (!mounted || myReqId !== reqRef.current) return
+        fetchProducts({ q, category, page, pageSize })
+            .then(({ items: newItems, total }) => {
+                if (!mounted || myReqId !== reqRef.current) return
+                if (page === 1) setItems(newItems)            // replace on first page
+                else setItems(prev => [...prev, ...newItems]) // append on next pages
+                setTotal(total)
+            })
+            .catch(console.error)
+            .finally(() => {
+                if (mounted && myReqId === reqRef.current) setLoading(false)
+            })
 
-            if (page === 1) {
-                // first page replaces the list
-                setItems(newItems)
-            } else {
-                // subsequent pages append
-                setItems((prev) => [...prev, ...newItems])
-            }
-            setTotal(total)
-        })
-
-        return () => {
-            mounted = false
-        }
+        return () => { mounted = false }
     }, [q, category, page])
+
+    const canLoadMore = items.length < total
+
+    // Infinite scroll via IntersectionObserver
+    useEffect(() => {
+        const el = sentinelRef.current
+        if (!el) return
+        const io = new IntersectionObserver(
+            (entries) => {
+                const isVisible = entries[0]?.isIntersecting
+                if (isVisible && canLoadMore && !loading) {
+                    setPage(p => p + 1)
+                }
+            },
+            { rootMargin: '200px 0px' } // prefetch before hitting the bottom
+        )
+        io.observe(el)
+        return () => io.disconnect()
+    }, [canLoadMore, loading])
 
     return (
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
@@ -69,9 +93,18 @@ export default function Home() {
             <div className="mt-6">
                 <ProductGrid
                     products={items}
-                    canLoadMore={items.length < total}
-                    onLoadMore={() => setPage((p) => p + 1)}
+                    loading={loading}     // show skeletons while loading
+                    canLoadMore={false}   // infinite scroll takes over
+                    onLoadMore={() => { }}
                 />
+
+                {/* Loading / end indicator */}
+                <div className="mt-6 flex justify-center text-sm text-gray-600">
+                    {loading ? <span>Loading…</span> : !canLoadMore && items.length > 0 ? <span>End of results</span> : null}
+                </div>
+
+                {/* Invisible sentinel to trigger next page */}
+                <div ref={sentinelRef} className="h-1" />
             </div>
         </div>
     )
