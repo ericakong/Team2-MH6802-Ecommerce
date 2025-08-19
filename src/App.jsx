@@ -9,7 +9,7 @@ import Checkout from './pages/Checkout'
 import ChatWidget from './components/ChatWidget'
 import { PROJECT_TITLE } from './config/constants';
 import ScrollToTop from './components/ScrollToTop'
-import OrderHistory from './pages/OrderHistory';
+// import OrderHistory from './pages/OrderHistory';
 
 export default function App() {
   useEffect(() => {
