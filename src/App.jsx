@@ -9,6 +9,7 @@ import Checkout from './pages/Checkout'
 import ChatWidget from './components/ChatWidget'
 import { PROJECT_TITLE } from './config/constants';
 import ScrollToTop from './components/ScrollToTop'
+import OrderHistory from './pages/OrderHistory';
 
 export default function App() {
   useEffect(() => {
@@ -24,6 +25,7 @@ export default function App() {
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/order-history" element={<OrderHistory />} /> 
         </Routes>
       </main>
       <Footer />
