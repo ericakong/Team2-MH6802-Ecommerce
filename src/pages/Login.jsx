@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { loginApi } from '../api/auth';
-import { USE_MOCK_API } from '../config/constantsc';
+import { USE_MOCK_API } from '../config/constants';
 
 export default function Login() {
     const { setLoading, saveAuth } = useContext(AuthContext);
