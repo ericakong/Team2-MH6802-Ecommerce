@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/$1" },     // keep serverless functions working
+    { "src": "/(.*)", "dest": "/index.html" }      // SPA fallback for all other routes
+  ]
+}
