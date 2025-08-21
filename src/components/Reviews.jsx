@@ -1,7 +1,7 @@
 // src/components/Reviews.jsx
 import { useEffect, useMemo, useState } from 'react'
 import Stars from './Stars'
-import { fetchReviews } from '../lib/reviewsApi'
+import { fetchReviews } from '../api/reviewsApi'
 
 function formatDate(iso) {
     try {

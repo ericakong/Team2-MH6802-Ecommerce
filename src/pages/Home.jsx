@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { fetchCategories, fetchProducts } from '../lib/api' // <-- original mock api
+import { fetchCategories, fetchProducts } from '../api/product' // <-- original mock api
 import ProductGrid from '../components/ProductGrid'
 import Filters from '../components/Filters'
 import SearchBar from '../components/SearchBar'

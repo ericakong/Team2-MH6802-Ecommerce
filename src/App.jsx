@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
+import ScrollToTop from './components/ScrollToTop'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Home from './pages/Home'
@@ -7,8 +8,11 @@ import ProductDetail from './pages/ProductDetail'
 import Cart from './pages/Cart'
 import Checkout from './pages/Checkout'
 import ChatWidget from './components/ChatWidget'
+import ProtectedRoute from './components/ProtectedRoute';
+import AdminRoute from './components/AdminRoute';
+import Login from './pages/Login';
+import ProductsAdmin from './pages/ProductsAdmin';
 import { PROJECT_TITLE } from './config/constants';
-import ScrollToTop from './components/ScrollToTop'
 // import OrderHistory from './pages/OrderHistory';
 
 export default function App() {
@@ -21,11 +25,24 @@ export default function App() {
       <main className="flex-1">
         <ScrollToTop />
         <Routes>
+          {/* Public */}
           <Route path="/" element={<Home />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/login" element={<Login />} />
+          
+          {/* Protected (example: require login for checkout) */}
+          <Route element={<ProtectedRoute />}>
+            <Route path="/checkout" element={<Checkout />} />
           {/* <Route path="/order-history" element={<OrderHistory />} /> */} 
+          </Route>
+          
+          {/* Admin-only */}
+          <Route element={<ProtectedRoute />}>
+            <Route element={<AdminRoute />}>
+              <Route path="/admin/products" element={<ProductsAdmin />} />
+            </Route>
+          </Route>
         </Routes>
       </main>
       <Footer />
