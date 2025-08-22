@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
 import { startCheckout } from '../api/payments';
 import { USE_MOCK_PAYMENTS } from '../config/constants';
+import ComplianceBox from '../components/ComplianceBox';
 
 export default function Checkout() {
   const { cart, total, isCartDisabled } = useContext(CartContext);
@@ -180,7 +181,10 @@ export default function Checkout() {
           </div>
         </aside>
       </div>
-
+      {/* ✅ Compliance disclosure box at the bottom */}
+        <div className="mt-8">
+          <ComplianceBox maxHeight="max-h-64" />
+        </div>
       {/* Debug Widget (you can remove in prod) */}
       <div className="fixed bottom-2 left-2 bg-white border px-2 py-1 text-xs z-50 shadow-md rounded">
         Debug → cart: {cart?.length ?? 'N/A'} | disabled: {isCartDisabled ? 'YES' : 'NO'}
