@@ -1,12 +1,14 @@
-// ProtectedRoute.jsx
 import { useContext } from 'react';
-import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { Navigate, useLocation, Outlet } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 export default function ProtectedRoute() {
-    const { isAuthenticated, initializing } = useContext(AuthContext);
-    const location = useLocation();
+  const { isAuthenticated, hydrating } = useContext(AuthContext);
+  const location = useLocation();
 
-    if (initializing) return null; // or a spinner
-    return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace state={{ from: location }} />;
+  if (hydrating) return null; // or <LoadingSpinner />
+
+  return isAuthenticated
+    ? <Outlet />
+    : <Navigate to="/login" state={{ from: location }} replace />;
 }

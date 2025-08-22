@@ -29,4 +29,5 @@ dist-ssr
 
 # server secrets (never commit)
 ./api/.env
+.env
 

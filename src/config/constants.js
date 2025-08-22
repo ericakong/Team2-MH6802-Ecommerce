@@ -7,3 +7,5 @@ export const USE_MOCK_API =
 export const API_BASE_URL =
   (import.meta.env.VITE_API_URL ?? '/api').replace(/\/+$/, '');
 
+export const USE_MOCK_PAYMENTS = import.meta.env.VITE_USE_MOCK_PAYMENTS === 'true';
+

@@ -13,6 +13,7 @@ import AdminRoute from './components/AdminRoute';
 import Login from './pages/Login';
 import ProductsAdmin from './pages/ProductsAdmin';
 import { PROJECT_TITLE } from './config/constants';
+import CheckoutSuccess from './pages/CheckoutSuccess.jsx';
 // import OrderHistory from './pages/OrderHistory';
 
 export default function App() {
@@ -34,6 +35,7 @@ export default function App() {
           {/* Protected (example: require login for checkout) */}
           <Route element={<ProtectedRoute />}>
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/checkout/success" element={<CheckoutSuccess />} />
           {/* <Route path="/order-history" element={<OrderHistory />} /> */} 
           </Route>
           
