@@ -1,18 +1,24 @@
-// api/retrieve-session.js
-const Stripe = require('stripe');
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+// api/retrieve-session.js (ES6)
+import Stripe from 'stripe';
 
-module.exports = async (req, res) => {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+export default async function handler(req, res) {
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
   const { id } = req.query || {};
-  if (!id) return res.status(400).json({ error: 'Missing session id' });
+  if (!id) {
+    return res.status(400).json({ error: 'Missing session id' });
+  }
 
   try {
-    const session = await stripe.checkout.sessions.retrieve(id, { expand: ['line_items'] });
+    const session = await stripe.checkout.sessions.retrieve(id, {
+      expand: ['line_items'],
+    });
+
     return res.status(200).json({
       id: session.id,
       status: session.status,
@@ -31,4 +37,4 @@ module.exports = async (req, res) => {
     console.error('[retrieve-session] error:', err);
     return res.status(400).json({ error: err.message });
   }
-};
+}

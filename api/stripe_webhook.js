@@ -1,7 +1,9 @@
-// api/stripe-webhook.js
-const Stripe = require('stripe');
+// api/stripe-webhook.js (ES6)
+import Stripe from 'stripe';
 
-module.exports.config = { api: { bodyParser: false } }; // raw body required
+export const config = {
+  api: { bodyParser: false }, // raw body required
+};
 
 function getRawBody(req) {
   return new Promise((resolve, reject) => {
@@ -12,20 +14,29 @@ function getRawBody(req) {
   });
 }
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2024-06-20' });
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: '2024-06-20',
+  });
+
   const sig = req.headers['stripe-signature'];
-  if (!sig) return res.status(400).json({ error: 'Missing Stripe-Signature header' });
+  if (!sig) {
+    return res.status(400).json({ error: 'Missing Stripe-Signature header' });
+  }
 
   let event;
   try {
     const body = await getRawBody(req);
-    event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET);
+    event = stripe.webhooks.constructEvent(
+      body,
+      sig,
+      process.env.STRIPE_WEBHOOK_SECRET
+    );
   } catch (err) {
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
@@ -34,7 +45,7 @@ module.exports = async (req, res) => {
     switch (event.type) {
       case 'checkout.session.completed': {
         const session = event.data.object;
-        // TODO: Fulfill order (create DB record, send email, etc.)
+        // ⚡ Fulfill order (save DB, send email, etc.)
         console.log('[Webhook] Paid:', {
           id: session.id,
           email: session.customer_email,
@@ -50,4 +61,4 @@ module.exports = async (req, res) => {
     console.error('[Webhook] Handler error:', err);
     return res.status(500).json({ error: 'Webhook handler failed' });
   }
-};
+}

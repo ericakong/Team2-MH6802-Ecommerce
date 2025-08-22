@@ -1,8 +1,9 @@
-// api/create-checkout-session.js (CommonJS serverless function)
-const Stripe = require('stripe');
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+// api/create-checkout-session.js (ES6 serverless function)
+import Stripe from 'stripe';
 
-module.exports = async (req, res) => {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+export default async function handler(req, res) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ error: 'Method Not Allowed' });
@@ -16,7 +17,7 @@ module.exports = async (req, res) => {
       price_data: {
         currency: 'sgd',
         product_data: { name: i.name },
-        unit_amount: i.price, // expect cents
+        unit_amount: i.price, // price in cents
       },
       quantity: i.quantity || 1,
     }));
@@ -29,8 +30,7 @@ module.exports = async (req, res) => {
       cancel_url: cancelUrl || `${origin}/checkout`,
       metadata: {
         ...metadata,
-        // Optional: attach your cart or a local orderId so webhook can reconcile
-        // cart: JSON.stringify(items),
+        // cart: JSON.stringify(items), // optional for debugging
       },
     });
 
@@ -39,4 +39,4 @@ module.exports = async (req, res) => {
     console.error('[create-checkout-session] error:', err);
     return res.status(500).json({ error: err.message || 'Stripe error' });
   }
-};
+}
