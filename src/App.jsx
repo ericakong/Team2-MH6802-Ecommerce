@@ -14,6 +14,7 @@ import Login from './pages/Login';
 import ProductsAdmin from './pages/ProductsAdmin';
 import { PROJECT_TITLE } from './config/constants';
 import CheckoutSuccess from './pages/CheckoutSuccess.jsx';
+import Compliance from './pages/Compliance.jsx';
 // import OrderHistory from './pages/OrderHistory';
 
 export default function App() {
@@ -36,6 +37,7 @@ export default function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/checkout/success" element={<CheckoutSuccess />} />
+            <Route path="/compliance" element={<Compliance />} />
           {/* <Route path="/order-history" element={<OrderHistory />} /> */} 
           </Route>
           

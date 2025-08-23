@@ -1,14 +1,18 @@
 import React from 'react';
 
-export default function ComplianceBox({ className = '', maxHeight = 'max-h-56' }) {
+export default function ComplianceBox({
+  className = '',
+  maxHeight = 'max-h-56',
+  showHeader = true,               // 👈 new
+}) {
   return (
     <div className={`border rounded-md bg-white ${className}`}>
-      {/* Header */}
-      <div className="px-3 py-2 border-b bg-gray-50 rounded-t-md">
-        <h3 className="text-sm font-semibold text-gray-800">
-          🔒 Compliance & Data Protection
-        </h3>
-      </div>
+      {/* Header (optional) */}
+      {showHeader && (
+        <div className="px-3 py-2 border-b bg-gray-50 rounded-t-md">
+          <h3 className="text-sm font-semibold text-gray-800">🔒 Compliance & Data Protection</h3>
+        </div>
+      )}
 
       {/* Scrollable content */}
       <div className={`p-3 text-xs leading-relaxed space-y-3 overflow-y-auto ${maxHeight}`}>
