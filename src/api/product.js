@@ -6,6 +6,14 @@ import seedProducts from '../data/products.json';
 
 const STORE_KEY = 'products_store_v1';
 
+// Clear storage when browser closes (not just refresh)
+// window.onbeforeunload fires on page unload
+window.addEventListener('beforeunload', () => {
+  try {
+    localStorage.removeItem(STORE_KEY);
+  } catch {}
+});
+
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
 function matchesId(productId, lookup) {

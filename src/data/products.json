@@ -5,11 +5,10 @@
     "price": 129.99,
     "category": "Audio",
     "rating": 4.6,
-    "image": "https://picsum.photos/seed/aurora/600/600",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Sony_S_Wireless_Headphones_%2847103208%29.jpeg/600px-Sony_S_Wireless_Headphones_%2847103208%29.jpeg",
     "images": [
-      "https://picsum.photos/seed/aurora1/800/800",
-      "https://picsum.photos/seed/aurora2/800/800",
-      "https://picsum.photos/seed/aurora3/800/800"
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Sony_S_Wireless_Headphones_%2847103208%29.jpeg/800px-Sony_S_Wireless_Headphones_%2847103208%29.jpeg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Sony_S_Wireless_Headphones_%2847103208%29.jpeg/960px-Sony_S_Wireless_Headphones_%2847103208%29.jpeg"
     ],
     "description": "Crisp, balanced sound with active noise reduction and 30-hour battery life."
   },
@@ -19,10 +18,10 @@
     "price": 199.0,
     "category": "Wearables",
     "rating": 4.3,
-    "image": "https://picsum.photos/seed/nebula/600/600",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/MediaTek_smartwatch_and_smartphone_20140606.jpg/600px-MediaTek_smartwatch_and_smartphone_20140606.jpg",
     "images": [
-      "https://picsum.photos/seed/nebula1/800/800",
-      "https://picsum.photos/seed/nebula2/800/800"
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/MediaTek_smartwatch_and_smartphone_20140606.jpg/800px-MediaTek_smartwatch_and_smartphone_20140606.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/MediaTek_smartwatch_and_smartphone_20140606.jpg/960px-MediaTek_smartwatch_and_smartphone_20140606.jpg"
     ],
     "description": "Track health metrics, NFC payments, and offline music."
   },
@@ -32,10 +31,10 @@
     "price": 49.5,
     "category": "Home",
     "rating": 4.2,
-    "image": "https://picsum.photos/seed/lumen/600/600",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Desk_Lamp_1_2013-07-12.jpg/600px-Desk_Lamp_1_2013-07-12.jpg",
     "images": [
-      "https://picsum.photos/seed/lumen1/800/800",
-      "https://picsum.photos/seed/lumen2/800/800"
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Desk_Lamp_1_2013-07-12.jpg/800px-Desk_Lamp_1_2013-07-12.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Desk_Lamp_1_2013-07-12.jpg/960px-Desk_Lamp_1_2013-07-12.jpg"
     ],
     "description": "Dimmable LED lamp with USB-C fast charging and color temperature control."
   },
@@ -45,11 +44,10 @@
     "price": 89.0,
     "category": "Accessories",
     "rating": 4.7,
-    "image": "https://picsum.photos/seed/atlas/600/600",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Backpack-1.jpg/600px-Backpack-1.jpg",
     "images": [
-      "https://picsum.photos/seed/atlas1/800/800",
-      "https://picsum.photos/seed/atlas2/800/800",
-      "https://picsum.photos/seed/atlas3/800/800"
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Backpack-1.jpg/800px-Backpack-1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Backpack-1.jpg/960px-Backpack-1.jpg"
     ],
     "description": "Water-resistant, 20L capacity with padded laptop sleeve."
   },
@@ -59,10 +57,10 @@
     "price": 59.99,
     "category": "Audio",
     "rating": 4.4,
-    "image": "https://picsum.photos/seed/comet/600/600",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/QFX_R-40_Portable_Bluetooth_Speaker.jpg/600px-QFX_R-40_Portable_Bluetooth_Speaker.jpg",
     "images": [
-      "https://picsum.photos/seed/comet1/800/800",
-      "https://picsum.photos/seed/comet2/800/800"
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/QFX_R-40_Portable_Bluetooth_Speaker.jpg/800px-QFX_R-40_Portable_Bluetooth_Speaker.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/QFX_R-40_Portable_Bluetooth_Speaker.jpg/960px-QFX_R-40_Portable_Bluetooth_Speaker.jpg"
     ],
     "description": "Rich bass in a compact form. IP67 dust & water resistance."
   },
@@ -72,10 +70,10 @@
     "price": 139.0,
     "category": "Accessories",
     "rating": 4.8,
-    "image": "https://picsum.photos/seed/orbit/600/600",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mechanical_Keyboard.jpg/600px-Mechanical_Keyboard.jpg",
     "images": [
-      "https://picsum.photos/seed/orbit1/800/800",
-      "https://picsum.photos/seed/orbit2/800/800"
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mechanical_Keyboard.jpg/800px-Mechanical_Keyboard.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mechanical_Keyboard.jpg/1024px-Mechanical_Keyboard.jpg"
     ],
     "description": "Hot-swappable switches, per-key RGB, and aluminum build."
   },
@@ -85,10 +83,10 @@
     "price": 249.0,
     "category": "Cameras",
     "rating": 4.5,
-    "image": "https://picsum.photos/seed/flux/600/600",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/GoPro_Hero_9_Black_-_Top.jpg/600px-GoPro_Hero_9_Black_-_Top.jpg",
     "images": [
-      "https://picsum.photos/seed/flux1/800/800",
-      "https://picsum.photos/seed/flux2/800/800"
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/GoPro_Hero_9_Black_-_Top.jpg/800px-GoPro_Hero_9_Black_-_Top.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/GoPro_Hero_9_Black_-_Top.jpg/960px-GoPro_Hero_9_Black_-_Top.jpg"
     ],
     "description": "4K60, horizon leveling, and waterproof without a case."
   },
@@ -98,10 +96,10 @@
     "price": 299.0,
     "category": "Drones",
     "rating": 4.1,
-    "image": "https://picsum.photos/seed/quasar/600/600",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/DJI_Mavic_Mini_at_High_Beach_Cricket_Club_1.jpg/600px-DJI_Mavic_Mini_at_High_Beach_Cricket_Club_1.jpg",
     "images": [
-      "https://picsum.photos/seed/quasar1/800/800",
-      "https://picsum.photos/seed/quasar2/800/800"
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/DJI_Mavic_Mini_at_High_Beach_Cricket_Club_1.jpg/800px-DJI_Mavic_Mini_at_High_Beach_Cricket_Club_1.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/DJI_Mavic_Mini_at_High_Beach_Cricket_Club_1.jpg/960px-DJI_Mavic_Mini_at_High_Beach_Cricket_Club_1.jpg"
     ],
     "description": "Sub-250g drone with 2-axis gimbal and GPS return-to-home."
   }

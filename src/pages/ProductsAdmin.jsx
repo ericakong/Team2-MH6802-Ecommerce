@@ -8,15 +8,15 @@ import {
 
 export default function ProductsAdmin() {
   const [q, setQ] = useState('');
-  const [category] = useState('All'); // hook up a real filter if you like
+  const [category] = useState('All');
   const [page, setPage] = useState(1);
   const [res, setRes] = useState({ items: [], total: 0, page: 1, pageSize: 6 });
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const pages = Math.max(1, Math.ceil(res.total / res.pageSize));
 
-  // Inline edit state (name/price per id)
-  const [edits, setEdits] = useState({}); // { [id]: { name, price } }
+  // Inline edit state (name/price/image per id)
+  const [edits, setEdits] = useState({}); // { [id]: { name, price, image } }
 
   // Add product form
   const [showAdd, setShowAdd] = useState(false);
@@ -28,11 +28,15 @@ export default function ProductsAdmin() {
     description: '',
   });
 
-  // ---- helper: rebuild the edit map from a list of items ----
+  // helper: rebuild the edit map from a list of items
   const seedEdits = (items) => {
     const next = {};
     items.forEach((p) => {
-      next[p.id] = { name: p.name ?? '', price: p.price ?? 0 };
+      next[p.id] = {
+        name: p.name ?? '',
+        price: p.price ?? 0,
+        image: p.image ?? '',
+      };
     });
     setEdits(next);
   };
@@ -45,7 +49,7 @@ export default function ProductsAdmin() {
       .then((data) => {
         if (!alive) return;
         setRes(data);
-        seedEdits(data.items);              // ✅ seed edits on every load
+        seedEdits(data.items);
       })
       .finally(() => {
         if (alive) setLoading(false);
@@ -64,11 +68,11 @@ export default function ProductsAdmin() {
       await adminUpdateProduct(id, {
         name: (patch.name || '').trim(),
         price: Number(patch.price) || 0,
+        image: (patch.image || '').trim(), // ✅ now we save image too
       });
-      // refresh current page
       const data = await fetchProducts({ q, category, page, pageSize: 6 });
       setRes(data);
-      seedEdits(data.items);                // ✅ reseed after save
+      seedEdits(data.items);
     } finally {
       setSaving(false);
     }
@@ -80,14 +84,13 @@ export default function ProductsAdmin() {
     setSaving(true);
     try {
       await adminRemoveProduct(id);
-      // if page becomes empty after deletion, move back one page
       const nextTotal = res.total - 1;
       const nextPages = Math.max(1, Math.ceil(nextTotal / res.pageSize));
       const nextPage = Math.min(page, nextPages);
       const data = await fetchProducts({ q, category, page: nextPage, pageSize: 6 });
       setPage(nextPage);
       setRes(data);
-      seedEdits(data.items);                // ✅ reseed after remove
+      seedEdits(data.items);
     } finally {
       setSaving(false);
     }
@@ -110,18 +113,23 @@ export default function ProductsAdmin() {
       });
       setShowAdd(false);
       setNewItem({ name: '', price: '', image: '', category: '', description: '' });
-      // reload first page to show new item (we prepend in API)
       const data = await fetchProducts({ q, category, page: 1, pageSize: 6 });
       setPage(1);
       setRes(data);
-      seedEdits(data.items);                // ✅ reseed after add
+      seedEdits(data.items);
     } finally {
       setSaving(false);
     }
   }
 
+  // tiny helper to force the browser to re-fetch when the URL changes
+  const bust = (url) => {
+    if (!url) return '';
+    return `${url}${url.includes('?') ? '&' : '?'}v=img1`;
+  };
+
   return (
-    <div className="p-4 max-w-4xl mx-auto">
+    <div className="p-4 max-w-5xl mx-auto">
       <h1 className="text-2xl font-bold mb-4">Products Management</h1>
 
       {/* Top controls */}
@@ -165,12 +173,13 @@ export default function ProductsAdmin() {
                 required
               />
             </div>
-            <div>
+            <div className="md:col-span-2">
               <label className="block text-sm mb-1">Image URL</label>
               <input
                 className="border rounded px-3 py-2 w-full"
                 value={newItem.image}
                 onChange={(e) => setNewItem({ ...newItem, image: e.target.value })}
+                placeholder="https://..."
               />
             </div>
             <div>
@@ -217,61 +226,84 @@ export default function ProductsAdmin() {
       ) : (
         <>
           <ul className="space-y-3">
-            {res.items.map((p) => (
-              <li key={p.id} className="bg-white shadow rounded-xl p-4">
-                <div className="flex items-center gap-4">
-                  <img src={p.image} alt={p.name} className="w-16 h-16 object-cover rounded border" />
-                  <div className="flex-1 grid md:grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-xs text-gray-600">Name</label>
-                      <input
-                        className="border rounded px-3 py-2 w-full"
-                        value={edits[p.id]?.name ?? p.name ?? ''}
-                        onChange={(e) =>
-                          setEdits((prev) => ({
-                            ...prev,
-                            [p.id]: { ...(prev[p.id] || {}), name: e.target.value },
-                          }))
-                        }
-                      />
+            {res.items.map((p) => {
+              const edit = edits[p.id] || {};
+              const imgSrc = bust(edit.image ?? p.image);
+              return (
+                <li key={p.id} className="bg-white shadow rounded-xl p-4">
+                  <div className="flex items-start gap-4">
+                    <img
+                      key={imgSrc}
+                      src={imgSrc}
+                      alt={p.name}
+                      className="w-16 h-16 object-cover rounded border"
+                    />
+                    <div className="flex-1 grid md:grid-cols-3 gap-3">
+                      <div>
+                        <label className="block text-xs text-gray-600">Name</label>
+                        <input
+                          className="border rounded px-3 py-2 w-full"
+                          value={edit.name ?? p.name ?? ''}
+                          onChange={(e) =>
+                            setEdits((prev) => ({
+                              ...prev,
+                              [p.id]: { ...(prev[p.id] || {}), name: e.target.value },
+                            }))
+                          }
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs text-gray-600">Price</label>
+                        <input
+                          type="number"
+                          min="0"
+                          step="0.01"
+                          className="border rounded px-3 py-2 w-full"
+                          value={edit.price ?? p.price ?? 0}
+                          onChange={(e) =>
+                            setEdits((prev) => ({
+                              ...prev,
+                              [p.id]: { ...(prev[p.id] || {}), price: e.target.value },
+                            }))
+                          }
+                        />
+                      </div>
+                      <div className="md:col-span-1">
+                        <label className="block text-xs text-gray-600">Image URL</label>
+                        <input
+                          className="border rounded px-3 py-2 w-full"
+                          placeholder="https://..."
+                          value={edit.image ?? p.image ?? ''}
+                          onChange={(e) =>
+                            setEdits((prev) => ({
+                              ...prev,
+                              [p.id]: { ...(prev[p.id] || {}), image: e.target.value },
+                            }))
+                          }
+                        />
+                      </div>
                     </div>
-                    <div>
-                      <label className="block text-xs text-gray-600">Price</label>
-                      <input
-                        type="number"
-                        min="0"
-                        step="0.01"
-                        className="border rounded px-3 py-2 w-full"
-                        value={edits[p.id]?.price ?? p.price ?? 0}
-                        onChange={(e) =>
-                          setEdits((prev) => ({
-                            ...prev,
-                            [p.id]: { ...(prev[p.id] || {}), price: e.target.value },
-                          }))
-                        }
-                      />
-                    </div>
-                  </div>
 
-                  <div className="flex flex-col gap-2">
-                    <button
-                      onClick={() => handleSave(p.id)}
-                      disabled={saving}
-                      className="text-sm bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 disabled:opacity-60"
-                    >
-                      Save
-                    </button>
-                    <button
-                      onClick={() => handleRemove(p.id)}
-                      disabled={saving}
-                      className="text-sm bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 disabled:opacity-60"
-                    >
-                      Remove
-                    </button>
+                    <div className="flex flex-col gap-2">
+                      <button
+                        onClick={() => handleSave(p.id)}
+                        disabled={saving}
+                        className="text-sm bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 disabled:opacity-60"
+                      >
+                        Save
+                      </button>
+                      <button
+                        onClick={() => handleRemove(p.id)}
+                        disabled={saving}
+                        className="text-sm bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 disabled:opacity-60"
+                      >
+                        Remove
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </li>
-            ))}
+                </li>
+              );
+            })}
           </ul>
 
           {/* Pagination */}
