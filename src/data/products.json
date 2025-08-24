@@ -40,17 +40,16 @@
   },
   {
     "id": "p-4",
-    "name": "Atlas Backpack",
-    "price": 89.0,
-    "category": "Accessories",
-    "rating": 4.7,
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Backpack-1.jpg/600px-Backpack-1.jpg",
+    "name": "Nova Smart Plug",
+    "price": 24.99,
+    "category": "Home",
+    "rating": 4.6,
+    "image": "https://upload.wikimedia.org/wikipedia/commons/5/5e/TP-Link-Kasa-Amazon-Alexa-Zubeh%C3%B6r-Smart-Home-WLAN-Steckdose-HS110.jpg",
     "images": [
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Backpack-1.jpg/800px-Backpack-1.jpg",
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Backpack-1.jpg/960px-Backpack-1.jpg"
+      "https://upload.wikimedia.org/wikipedia/commons/5/5e/TP-Link-Kasa-Amazon-Alexa-Zubeh%C3%B6r-Smart-Home-WLAN-Steckdose-HS110.jpg"
     ],
-    "description": "Water-resistant, 20L capacity with padded laptop sleeve."
-  },
+    "description": "Wi‑Fi smart plug with energy monitoring, schedules and voice assistant support."
+},
   {
     "id": "p-5",
     "name": "Comet Portable Speaker",
